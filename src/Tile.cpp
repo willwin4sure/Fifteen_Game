@@ -1,4 +1,10 @@
 #include "Tile.h"
+#include <cassert>
+
+Tile::Tile(int number) : m_num { (assert(0 <= number), number) }
+{
+    
+}
 
 int Tile::getNum() const
 {
@@ -12,15 +18,15 @@ bool Tile::isEmpty() const
 
 std::ostream& operator<<(std::ostream& out, const Tile& tile)
 {
-    out << ' ';
+    out << " ";
     if (tile.isEmpty()) out << "  ";
     else
     {
         int num = tile.getNum();
 
-        if (num <= 9) out << ' ';
+        if (num <= 9) out << " ";
         out << num;
     }
-    out << ' ';
+    out << " ";
     return out;
 }

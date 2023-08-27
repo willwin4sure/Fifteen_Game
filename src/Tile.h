@@ -10,10 +10,7 @@ private:
 
 public:
     Tile() = default;
-    explicit Tile(int number)
-        : m_num { number }
-    {
-    }
+    explicit Tile(int number);
 
     int getNum() const;
     bool isEmpty() const;
