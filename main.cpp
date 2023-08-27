@@ -69,6 +69,9 @@ int main()
         if (command == Command::QUIT) {
             std::cout << "\n\nBye!\n\n";
             break;
+        } else {
+            board.moveTile(command);
+            std::cout << board;
         }
     }
 

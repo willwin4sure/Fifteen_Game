@@ -2,6 +2,7 @@
 #define COMMAND_082723_H
 
 #include <ostream>
+#include <utility>
 
 enum class Command
 {
@@ -15,6 +16,8 @@ enum class Command
     maxCommands,
 };
 
+Command operator-(Command command);
+std::pair<int, int> getDisplacement(Command command);
 std::ostream& operator<<(std::ostream& out, Command command);
 
 #endif
