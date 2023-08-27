@@ -6,11 +6,11 @@
 enum class Command
 {
     INVALID,
-    QUIT,
     UP,
     DOWN,
     LEFT,
     RIGHT,
+    QUIT,
 
     maxCommands,
 };

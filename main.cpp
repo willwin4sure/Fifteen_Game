@@ -1,6 +1,7 @@
 #include "src/Tile.h"
 #include "src/Board.h"
 #include "src/UserCommand.h"
+#include "src/Random.h"
 
 #include <iostream>
 #include <limits>
@@ -46,6 +47,11 @@ namespace UserInput
         }
         
         return command;
+    }
+
+    Command getRandomDirectionCommand()
+    {
+        return static_cast<Command>(Random::get(1, 4));
     }
 }
 
