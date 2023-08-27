@@ -70,8 +70,8 @@ int main()
             std::cout << "\n\nBye!\n\n";
             break;
         } else {
-            board.moveTile(command);
-            std::cout << board;
+            bool moved = board.moveTile(command);
+            if (moved) std::cout << board;
         }
     }
 

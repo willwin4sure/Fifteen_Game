@@ -25,18 +25,21 @@ Tile& Board::getTile(Location loc)
     return m_board[loc.first][loc.second];
 }
 
-void Board::moveTile(Command command)
+bool Board::moveTile(Command command)
 {
     std::pair<int, int> delta = getDisplacement(-command);
     Location newEmptyLoc { 
         m_emptyLoc.first + delta.first, 
         m_emptyLoc.second + delta.second
     };
-    
+
     if (inBounds(newEmptyLoc)) {
         std::swap(getTile(m_emptyLoc), getTile(newEmptyLoc));
         m_emptyLoc = newEmptyLoc;
+        return true;
     }
+    
+    return false;
 }
 
 std::ostream& operator<<(std::ostream& out, const Board& board)

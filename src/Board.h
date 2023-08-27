@@ -23,7 +23,7 @@ public:
 
     bool inBounds(Location loc) const;
     Tile& getTile(Location loc);
-    void moveTile(Command command);
+    bool moveTile(Command command);
 
     friend std::ostream& operator<<(std::ostream& out, const Board& board);
 };
