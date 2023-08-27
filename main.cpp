@@ -1,5 +1,6 @@
 #include "src/Tile.h"
 #include "src/Board.h"
+#include "src/UserCommand.h"
 
 #include <iostream>
 #include <limits>
@@ -7,27 +8,6 @@
 
 namespace UserInput
 {
-    enum class Command : char
-    {
-        UP = 'w',
-        DOWN = 's',
-        LEFT = 'a',
-        RIGHT = 'd',
-        QUIT = 'q',
-    };
-
-    constexpr std::string_view validCommands { "wasdq" };
-
-    std::ostream& operator<<(std::ostream& out, const Command& command)
-    {
-        return out << static_cast<char>(command);
-    }
-
-    bool isValidCommand(char ch)
-    {
-        return validCommands.find(ch) != std::string::npos;
-    }
-
     void ignoreLine()
     {
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -42,15 +22,30 @@ namespace UserInput
         return op;
     }
 
+    Command getCommand()
+    {
+        char ch { getCharacter() };
+        switch (ch)
+        {
+        case 'q': return Command::QUIT;
+        case 'w': return Command::UP;
+        case 's': return Command::DOWN;
+        case 'a': return Command::LEFT;
+        case 'd': return Command::RIGHT;
+        default: return Command::INVALID;
+        }
+    }
+
     Command getCommandFromUser()
     {
-        char ch {};
-        while (!isValidCommand(ch))
+        Command command { Command::INVALID };
+
+        while (command == Command::INVALID)
         {
-            ch = getCharacter();
+            command = getCommand();
         }
         
-        return static_cast<Command>(ch);
+        return command;
     }
 }
 
@@ -61,11 +56,11 @@ int main()
 
     while (true)
     {
-        UserInput::Command command { UserInput::getCommandFromUser() };
+        Command command { UserInput::getCommandFromUser() };
 
         std::cout << "Valid command: " << command << '\n';
 
-        if (command == UserInput::Command::QUIT) {
+        if (command == Command::QUIT) {
             std::cout << "\n\nBye!\n\n";
             break;
         }
