@@ -5,11 +5,11 @@ constexpr int g_consoleLines { 25 };
 Board::Board()
     : m_emptyLoc { SIZE - 1, SIZE - 1 }
 {
-    for (int i { 0 }; i < SIZE; ++i)
+    for (int row { 0 }; row < SIZE; ++row)
     {
-        for (int j { 0 }; j < SIZE; ++j) 
+        for (int col { 0 }; col < SIZE; ++col) 
         {
-            m_board[i][j] = Tile((SIZE * i + j + 1) % (SIZE * SIZE));
+            m_board[row][col] = Tile((SIZE * row + col + 1) % (SIZE * SIZE));
         }
     }
 }
@@ -40,6 +40,28 @@ bool Board::moveTile(Command command)
     }
     
     return false;
+}
+
+bool Board::isWon() const
+{
+    for (int row { 0 }; row < SIZE; ++row)
+    {
+        for (int col { 0 }; col < SIZE; ++col)
+        {
+            if (m_board[row][col].getNum() != (SIZE * row + col + 1) % (SIZE * SIZE))
+                return false;
+        }
+    }
+    return true;
+}
+
+void Board::randomizeBoard(int steps)
+{
+    for (int iters { 0 }; iters < steps; ++iters)
+    {
+        bool moved { moveTile(getRandomDirectionCommand()) };
+        if (!moved) --iters;
+    }
 }
 
 std::ostream& operator<<(std::ostream& out, const Board& board)

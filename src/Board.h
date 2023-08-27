@@ -24,6 +24,8 @@ public:
     bool inBounds(Location loc) const;
     Tile& getTile(Location loc);
     bool moveTile(Command command);
+    bool isWon() const;
+    void randomizeBoard(int steps);
 
     friend std::ostream& operator<<(std::ostream& out, const Board& board);
 };

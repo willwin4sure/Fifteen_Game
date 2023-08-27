@@ -1,7 +1,6 @@
 #include "src/Tile.h"
 #include "src/Board.h"
 #include "src/UserCommand.h"
-#include "src/Random.h"
 
 #include <iostream>
 #include <limits>
@@ -48,16 +47,12 @@ namespace UserInput
         
         return command;
     }
-
-    Command getRandomDirectionCommand()
-    {
-        return static_cast<Command>(Random::get(1, 4));
-    }
 }
 
 int main()
 {
     Board board {};
+    board.randomizeBoard(10000);
     std::cout << board;
 
     while (true)
@@ -72,6 +67,10 @@ int main()
         } else {
             bool moved = board.moveTile(command);
             if (moved) std::cout << board;
+            if (board.isWon()) {
+                std::cout << "\n\nYou won!\n\n";
+                break;
+            }
         }
     }
 

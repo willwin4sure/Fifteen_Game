@@ -19,5 +19,6 @@ enum class Command
 Command operator-(Command command);
 std::pair<int, int> getDisplacement(Command command);
 std::ostream& operator<<(std::ostream& out, Command command);
+Command getRandomDirectionCommand();
 
 #endif

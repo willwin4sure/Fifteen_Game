@@ -1,4 +1,5 @@
 #include "UserCommand.h"
+#include "Random.h"
 
 Command operator-(Command command)
 {
@@ -35,4 +36,9 @@ std::ostream& operator<<(std::ostream& out, Command command)
     case Command::RIGHT: return out << "Right";
     default:             return out << "Invalid Command";
     }
+}
+
+Command getRandomDirectionCommand()
+{
+    return static_cast<Command>(Random::get(1, 4));
 }
