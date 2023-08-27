@@ -2,22 +2,74 @@
 #include "src/Board.h"
 
 #include <iostream>
+#include <limits>
+#include <string>
+
+namespace UserInput
+{
+    enum class Command : char
+    {
+        UP = 'w',
+        DOWN = 's',
+        LEFT = 'a',
+        RIGHT = 'd',
+        QUIT = 'q',
+    };
+
+    constexpr std::string_view validCommands { "wasdq" };
+
+    std::ostream& operator<<(std::ostream& out, const Command& command)
+    {
+        return out << static_cast<char>(command);
+    }
+
+    bool isValidCommand(char ch)
+    {
+        return validCommands.find(ch) != std::string::npos;
+    }
+
+    void ignoreLine()
+    {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    char getCharacter()
+    {
+        std::cout << ">> ";
+        char op {};
+        std::cin >> op;
+        ignoreLine();
+        return op;
+    }
+
+    Command getCommandFromUser()
+    {
+        char ch {};
+        while (!isValidCommand(ch))
+        {
+            ch = getCharacter();
+        }
+        
+        return static_cast<Command>(ch);
+    }
+}
 
 int main()
 {
-    Tile tile1{ 10 };
-    Tile tile2{ 8 };
-    Tile tile3{ 0 }; // the missing tile
-    Tile tile4{ 1 };
-
-    std::cout << "0123456789ABCDEF\n"; // to make it easy to see how many spaces are in the next line
-    std::cout << tile1 << tile2 << tile3 << tile4 << '\n';
-
-    std::cout << std::boolalpha << tile1.isEmpty() << ' ' << tile3.isEmpty() << '\n';
-    std::cout << "Tile 2 has number: " << tile2.getNum() << "\nTile 4 has number: " << tile4.getNum() << '\n';
-
     Board board {};
     std::cout << board;
+
+    while (true)
+    {
+        UserInput::Command command { UserInput::getCommandFromUser() };
+
+        std::cout << "Valid command: " << command << '\n';
+
+        if (command == UserInput::Command::QUIT) {
+            std::cout << "\n\nBye!\n\n";
+            break;
+        }
+    }
 
     return 0;
 }
